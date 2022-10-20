@@ -1,5 +1,7 @@
 #include "display.h"
 #include "global.h"
+#include "interrupt.h"
+
 // timer0 interrupt
 // every 50ms increment x
 void timer0() __interrupt 1{
@@ -12,12 +14,12 @@ void timer0() __interrupt 1{
 	x++;
 }
 
-/* external interrupt 0 */
+/* external interrupt 0*/
 // decrease
 void int0() __interrupt 0{
 	EX0 = 0;// turn off external interrupt 0
 	if(DEC == 0 && set_st == 1){// decrease upper limits
-		while(DEC == 0){// holds d
+		while(DEC == 0){// holds on
 			Disp_alarm(upper_limit);
 		}
 		upper_limit--;
@@ -37,10 +39,10 @@ void int0() __interrupt 0{
 
 /* external interrupt 1 */
 // increase
-void int1(void) __interrupt 2{
+void int1() __interrupt 2{
 	EX1 = 0;// turn off external interrupt 1
 	if(ADD == 0 && set_st == 1){//increase upper limits
-		while(ADD = 0){
+		while(ADD == 0){
 			Disp_alarm(upper_limit);
 		}
 		upper_limit++;

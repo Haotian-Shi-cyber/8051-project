@@ -13,6 +13,6 @@ __bit beep_st = 0;
 unsigned char x = 0;// timer 
 unsigned char set_st = 0;// choose to set upper or lower limit
 
-signed char m;// temp integer value
-unsigned char ap;//floating point value
+signed char m = 0;// temp integer value
+unsigned char ap = 0;//floating point value
 

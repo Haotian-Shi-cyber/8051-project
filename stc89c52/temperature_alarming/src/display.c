@@ -27,13 +27,13 @@ void Disp_Temperature(){ // display temperaturea
 	P2 = 0xff;
 
 	P0 = ~LEDdata[m%10]; // display digit at 2nd
-	light_point = ~0x1;     // display point
+	light_point = 0;     // display point
 	P2 = 0xf7;
 	Delay(100);
 	P2 = 0xff;
 
 	P0 = ~LEDdata[m/10]; // display tens at 1st
-	P2 = 0Xfd;
+	P2 = 0xfd;
 	Delay(100);
 	P2 = 0xff;
 }

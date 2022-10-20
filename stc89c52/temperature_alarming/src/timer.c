@@ -1,7 +1,7 @@
 #include "timer.h"
 #include "8051.h"
 
-void InitTimer(void){
+void InitTimer(){
 	//TMOD REG, NOT BIT ADDRESSABLE
 	TMOD = 0x1;// please refer to TMOD manual, M1 = 0 & M0 = 1, 16 bit timer/counter
 	

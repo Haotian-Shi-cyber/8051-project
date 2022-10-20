@@ -3,6 +3,7 @@
 #include "display.h"
 #include "alarm.h"
 #include "global.h"
+#include "interrupt.h"
 
 //defined first here
 
@@ -19,7 +20,7 @@ int main(){
 	IT1 = 1;// interrupt 1 falling edge triggered external interrupt
 
 	check_temp();// check current temperature, update global variable m and ap
-	
+	check_temp();
 
 	// init display - - - - for some time
 	for(z = 0; z < 300; z++){
@@ -37,8 +38,8 @@ int main(){
 		if(SET == 0){
 			Delay(2000);
 			while(SET == 0);// make sure it holds some time
-			set_st++; // choose upper or lower
-			x = 0; // ??
+			set_st++; // choose upper or lower limit
+			x = 0;
 			flashing = 1;
 			if(set_st > 2)
 				set_st = 0; // make sure it has only to choose upper or lower limits
@@ -53,11 +54,6 @@ int main(){
 
 			check_temp();// set current temp
 			Disp_Temperature();// display temp
-			// every 50ms, changing state of beeping to make it occasionally beep -_-_-_-_, like this
-			if(x>=10){
-				beep_st = ~beep_st;
-				x = 0;
-			}
 			Alarm(); // detect if alarm
 		}
 		else if(set_st == 1) {
@@ -65,9 +61,12 @@ int main(){
 			ALARM = 1; // turn off led
 			EX0 = 1; // enable interrupt 0
 			EX1 = 1;// enable interrupt 1
-			// every 50ms, changing state of flashing to make it flashing the num on the display
+			// every 500ms, changing state of flashing to make it flashing the num on the display
 			if(x >= 10){
-				flashing = ~flashing;
+				if(flashing)
+					flashing = 0;
+				else
+					flashing = 1;
 				x = 0;
 			}
 			if(flashing){
@@ -81,7 +80,10 @@ int main(){
 			EX1 = 1;
 			// every 50ms, changing state of flashing to make it flashing the num on the display
 			if(x >= 10){
-				flashing = ~flashing;
+				if(flashing)
+					flashing = 0;
+				else
+					flashing = 1;
 				x = 0;
 			}
 			if(flashing){

@@ -38,7 +38,7 @@ unsigned char ReadOneByte(){
 // write one byte
 void WriteOneByte(unsigned char dat){
 	unsigned char i = 0;
-	for(i = 8; i > 0; i++){
+	for(i = 8; i > 0; i--){
 		DQ = 0;// before write, master has to be active low
 		DQ = dat&0x01;// write from lsbit to msbit
 		Delay_DS18B20(5);// sample windows is between 15-60 after active low
@@ -64,6 +64,16 @@ unsigned int ReadTemperature(){
 	WriteOneByte(0xBE); // read scrachpad mem
 	a = ReadOneByte(); // read low byte(LSByte first) of temperature
 	b = ReadOneByte(); // read high byte(MSByte second) of temperature
+			   
+	/* serial debug */
+	//remeber to comment out these operation in final code
+	//TMOD = 0x20; // using timer to generate baud rate
+	//TH1 = 0xfd; // baud rate 9600 bps
+	//SCON = 0x50; // mode 1 8 bit uart, variable baud rate set by user
+	//TR1 = 1; // enable timer 1
+	//SBUF = a; // or SBUF = b
+	/* end of debug info */
+
 	t = b;
 	t <<= 8; //put it into high byte of 16 bit temperature
 	t |= a; // get the final 16 bit temperature;

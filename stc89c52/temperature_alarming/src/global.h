@@ -24,6 +24,7 @@ extern int tens, digit;
 //declared in main
 extern signed char m; // integer temperature 
 extern unsigned char ap;// after floating point val
+
 			
 extern signed char upper_limit;// alarming temperature, default upper limit
 extern signed char lower_limit;// alarming temperature, default lower limit
