@@ -1,3 +1,5 @@
+to compile and load program into mcu
+
 make
 
 make clean 
